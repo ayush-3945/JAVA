@@ -1,7 +1,7 @@
 public class SingleLinkedList {
 
     // ============================
-    // Node
+    // Node Class
     // ============================
     class Node {
         int data;
@@ -24,13 +24,10 @@ public class SingleLinkedList {
     }
 
     // ============================
-    // Insertion
+    // Insert at Head
     // ============================
-
-    // Insert at beginning
     public void insertAtHead(int data) {
         Node newNode = new Node(data);
-        // if LL is empty -> head and tail ko newNode pr point kardo
         if (head == null && tail == null) {
             head = newNode;
             tail = newNode;
@@ -38,14 +35,14 @@ public class SingleLinkedList {
             newNode.next = head;
             head = newNode;
         }
-        // increase the size by 1
         size++;
     }
 
-    // Insert at end
+    // ============================
+    // Insert at Tail
+    // ============================
     public void insertAtTail(int data) {
         Node newNode = new Node(data);
-        // if LL is empty -> head and tail ko newNode pr point kardo
         if (head == null && tail == null) {
             head = newNode;
             tail = newNode;
@@ -53,11 +50,12 @@ public class SingleLinkedList {
             tail.next = newNode;
             tail = newNode;
         }
-        // increase the size by 1
         size++;
     }
 
-    // Insert at given position (0-indexed)
+    // ============================
+    // Insert at Position (0-indexed)
+    // ============================
     public void insertAtPosition(int data, int pos) {
         if (pos < 0 || pos > size) {
             System.out.println("Invalid position");
@@ -73,105 +71,56 @@ public class SingleLinkedList {
         }
         Node newNode = new Node(data);
         Node curr = head;
-        // pos se pehle wale node tak jao
         for (int i = 0; i < pos - 1; i++) {
             curr = curr.next;
         }
         newNode.next = curr.next;
         curr.next = newNode;
-        // increase the size by 1
         size++;
     }
 
     // ============================
-    // Traversal / Search / Update
+    // Delete Head
     // ============================
-
-    // Traversal
-    public void display() {
-        Node curr = head;
-        while (curr != null) {
-            System.out.print(curr.data + " -> ");
-            curr = curr.next;
-        }
-        System.out.println("null");
-    }
-
-    // Length of LL
-    public int length() {
-        return size;
-    }
-
-    // Search an element in LL
-    public boolean search(int data) {
-        Node curr = head;
-        while (curr != null) {
-            if (curr.data == data) {
-                return true;
-            }
-            curr = curr.next;
-        }
-        return false;
-    }
-
-    // Updation in LL (update value at given position)
-    public void update(int pos, int newData) {
-        if (pos < 0 || pos >= size) {
-            System.out.println("Invalid position");
-            return;
-        }
-        Node curr = head;
-        for (int i = 0; i < pos; i++) {
-            curr = curr.next;
-        }
-        curr.data = newData;
-    }
-
-    // ============================
-    // Deletion
-    // ============================
-
-    // Delete head
     public void deleteHead() {
         if (head == null) {
             System.out.println("List is empty");
             return;
         }
-        // agar sirf ek hi node hai
         if (head == tail) {
             head = null;
             tail = null;
         } else {
             head = head.next;
         }
-        // decrease the size by 1
         size--;
     }
 
-    // Delete tail
+    // ============================
+    // Delete Tail
+    // ============================
     public void deleteTail() {
         if (head == null) {
             System.out.println("List is empty");
             return;
         }
-        // agar sirf ek hi node hai
         if (head == tail) {
             head = null;
             tail = null;
         } else {
             Node curr = head;
-            // second-last node tak jao
             while (curr.next != tail) {
                 curr = curr.next;
             }
             curr.next = null;
             tail = curr;
         }
-        // decrease the size by 1
         size--;
     }
 
-    // Delete at given position (0-indexed)
+    // ============================
+    // Delete at Position (0-indexed)
+    // ============================
     public void deleteAtPosition(int pos) {
         if (pos < 0 || pos >= size) {
             System.out.println("Invalid position");
@@ -186,12 +135,129 @@ public class SingleLinkedList {
             return;
         }
         Node curr = head;
-        // pos se pehle wale node tak jao
         for (int i = 0; i < pos - 1; i++) {
             curr = curr.next;
         }
         curr.next = curr.next.next;
-        // decrease the size by 1
         size--;
+    }
+
+    // ============================
+    // Get Size
+    // ============================
+    public int getSize() {
+        return size;
+    }
+
+    // ============================
+    // Get Head
+    // ============================
+    public int getHead() {
+        if (head == null) {
+            System.out.println("List is empty");
+            return -1;
+        }
+        return head.data;
+    }
+
+    // ============================
+    // Get Tail
+    // ============================
+    public int getTail() {
+        if (tail == null) {
+            System.out.println("List is empty");
+            return -1;
+        }
+        return tail.data;
+    }
+
+    // ============================
+    // Search
+    // ============================
+    public boolean search(int target) {
+        Node curr = head;
+        while (curr != null) {
+            if (curr.data == target) return true;
+            curr = curr.next;
+        }
+        return false;
+    }
+
+    // ============================
+    // Find Position
+    // ============================
+    public int findPosition(int target) {
+        Node curr = head;
+        int pos = 0;
+        while (curr != null) {
+            if (curr.data == target) return pos;
+            curr = curr.next;
+            pos++;
+        }
+        return -1;
+    }
+
+    // ============================
+    // Print List
+    // ============================
+    public void printList() {
+        if (head == null) {
+            System.out.println("List is empty");
+            return;
+        }
+        Node curr = head;
+        while (curr != null) {
+            System.out.print(curr.data + "->");
+            curr = curr.next;
+        }
+        System.out.println();
+    }
+
+    // ============================
+    // Main Method
+    // ============================
+    public static void main(String[] args) {
+
+        SingleLinkedList mylist = new SingleLinkedList();
+
+        // Empty list check
+        mylist.printList();
+        System.out.println("Size of LL: " + mylist.getSize());
+
+        // Insert at Head
+        mylist.insertAtHead(10);
+        mylist.printList();
+
+        mylist.insertAtHead(20);
+        mylist.printList();
+
+        mylist.insertAtHead(30);
+        mylist.printList();
+
+        // Insert at Tail
+        mylist.insertAtTail(100);
+        mylist.printList();
+
+        mylist.insertAtTail(110);
+        mylist.printList();
+
+        mylist.insertAtTail(120);
+        mylist.printList();
+
+        // Insert at Position
+        mylist.insertAtPosition(22, 1);
+        mylist.printList();
+
+        mylist.insertAtPosition(200, 8);
+        mylist.printList();
+
+        mylist.insertAtPosition(500, 5);
+        mylist.printList();
+
+        // Head, Tail, Search, FindPosition
+        System.out.println("head data: " + mylist.getHead());
+        System.out.println("tail data: " + mylist.getTail());
+        System.out.println("Found or Not: " + mylist.search(2000));
+        System.out.println("Position of 200 is: " + mylist.findPosition(200));
     }
 }
